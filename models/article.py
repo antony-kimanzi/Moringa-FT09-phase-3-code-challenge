@@ -3,7 +3,7 @@ from models.author import Author
 from models.magazine import Magazine
 
 class Article:
-    def __init__(self, author, magazine, title, id=None):
+    def __init__(self, title, author, magazine):
         if not isinstance(author, Author):
             raise Exception("author must be an instance of Author class")
         
@@ -30,7 +30,7 @@ class Article:
 
 
     def __repr__(self):
-        return f'<Article {self.title}>'
+        return f'<Article {self._title}>'
     
     @property
     def author(self):

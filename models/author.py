@@ -3,7 +3,7 @@ from database.connection import get_db_connection
 
 
 class Author:
-    def __init__(self, name, id = None):     
+    def __init__(self, id = None, name = None):     
         if not isinstance(name, str):
             raise Exception("Author's name should be a string.")
         if len(name) == 0:
@@ -44,8 +44,6 @@ class Author:
         sql = """
             SELECT articles.id, articles.title, articles.content
             FROM articles
-            JOIN authors
-            ON articles.author_id = authors.id
             WHERE articles.author_id = ?
         """
 
@@ -62,15 +60,15 @@ class Author:
         conn = get_db_connection()
         cursor = conn.cursor()
         sql = """
-            SELECT magazines.id, magazines.name, magazines.author
+            SELECT magazines.id, magazines.name, magazines.category
             FROM magazines
             JOIN articles
             ON articles.magazine_id = magazines.id
             WHERE articles.author_id = ?
-            GROUP BY magazines.id, magazines.name, magazines.author
+            GROUP BY magazines.id, magazines.name, magazines.category
         """
 
-        cursor.execute(sql, (self._id))
+        cursor.execute(sql, (self._id,))
         magazines_list = cursor.fetchall()
         conn.close()
 

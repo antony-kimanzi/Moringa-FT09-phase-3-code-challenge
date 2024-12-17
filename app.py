@@ -27,18 +27,53 @@ def main():
     '''
 
     # Create an author
-    author = Author(author_name)
+    author = Author(name = author_name)
 
     # Create a magazine
-    magazine = Magazine(magazine_name, magazine_category)
+    magazine = Magazine(name = magazine_name, category = magazine_category)
 
     # Create an article
-    article = Article(author, magazine, article_title)
+    article = Article(author = author, magazine = magazine, title = article_title)
 
     article.add_content(article_content)
 
     # Query the database for inserted records. 
     # The following fetch functionality should probably be in their respective models
+     # Display created data
+    print("\n--- Created Author ---")
+    print(author)
+
+    print("\n--- Created Magazine ---")
+    print(magazine)
+
+    print("\n--- Created Article ---")
+    print(article)
+
+    # Test Author methods
+    print("\n--- Articles by Author ---")
+    for art in author.articles():
+        print(art)
+
+    print("\n--- Magazines by Author ---")
+    for mag in author.magazines():
+        print(mag)
+
+    # Test Magazine methods
+    print("\n--- Articles in Magazine ---")
+    for art in magazine.articles():
+        print(art)
+
+    print("\n--- Contributors to Magazine ---")
+    for contrib in magazine.contributors():
+        print(contrib)
+
+    print("\n--- Article Titles in Magazine ---")
+    for title in magazine.article_titles():
+        print(title)
+
+    print("\n--- Contributing Authors to Magazine ---")
+    for contrib_author in magazine.contributing_authors():
+        print(contrib_author)
 
     cursor.execute('SELECT * FROM magazines')
     magazines = cursor.fetchall()
@@ -52,17 +87,19 @@ def main():
     conn.close()
 
     # Display results
-    # print("\nMagazines:")
-    # for magazine in magazines:
-    #     print(Magazine(magazine["id"], magazine["name"], magazine["category"]))
+    print("\nMagazines:")
+    for magazine in magazines:
+        print(Magazine(id = magazine["id"], name = magazine["name"], category = magazine["category"]))
 
-    # print("\nAuthors:")
-    # for author in authors:
-    #     print(Author(author["id"], author["name"]))
+    print("\nAuthors:")
+    for author in authors:
+        print(Author(id = author["id"], name = author["name"]))
 
-    # print("\nArticles:")
-    # for article in articles:
-    #     print(Article(article["id"], article["title"], article["content"], article["author_id"], article["magazine_id"]))
+    print("\nArticles:")
+    for article in articles:
+        print(Article(id = article["id"], title=article["title"], author = article["author_id"], magazine = article["magazine_id"]))
+
+
 
 if __name__ == "__main__":
     main()

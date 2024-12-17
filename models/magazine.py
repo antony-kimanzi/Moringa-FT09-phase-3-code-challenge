@@ -5,7 +5,7 @@ from models.author import Author
 
 
 class Magazine:
-    def __init__(self, name, category, id = None):
+    def __init__(self, id = None, name = None, category = None):
         if not isinstance(name, str):
             raise Exception("Magazine's name should be a string.")
         if not (2<= len(name) <=16):
@@ -17,6 +17,7 @@ class Magazine:
             raise Exception("Magazine category must be longer than 0 characters")
         self._name = name
         self._category = category
+        self._id = id
 
         if id is None:
             conn = get_db_connection()
